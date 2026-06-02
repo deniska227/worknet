@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="form-container">
+
+    <img src="https://i.yapx.ru/dioSB.png" class="logo">
+
+    <h2>Регистрация</h2>
+
+    <form id="registerForm">
+
+        <div class="input-group">
+            <input type="text" id="login" placeholder="Логин" required>
+        </div>
+
+        <div class="input-group">
+            <input type="email" id="email" placeholder="Email" required>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="pass1" placeholder="Пароль" required>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="pass2" placeholder="Повторите пароль" required>
+        </div>
+
+        <div class="validation" id="validation" style="display:none;">
+            <div id="length" class="invalid">минимум 6 символов</div>
+            <div id="letter" class="invalid">буквы</div>
+            <div id="number" class="invalid">цифры</div>
+        </div>
+
+        <button type="submit">Создать аккаунт</button>
+
+    </form>
+
+    <p>Уже есть аккаунт? <a href="login.html">Войти</a></p>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseUrl = "https://nssrxeefdvxsoxdipkau.supabase.co";
+const supabaseKey = "sb_publishable_9timKwMVgkmSJxlmKblINw_PVvAnSHD";
+
+const supabaseClient =
+    window.supabase?.createClient?.(supabaseUrl, supabaseKey);
+
+
+if (!supabaseClient) {
+    console.error("Supabase не загрузился");
+}
+
+
+const form = document.getElementById("registerForm");
+const pass1 = document.getElementById("pass1");
+const validation = document.getElementById("validation");
+
+pass1.addEventListener("input", () => {
+    validation.style.display = "block";
+
+    const v = pass1.value;
+
+    document.getElementById("length").className =
+        v.length >= 6 ? "valid" : "invalid";
+
+    document.getElementById("letter").className =
+        /[a-zA-Z]/.test(v) ? "valid" : "invalid";
+
+    document.getElementById("number").className =
+        /[0-9]/.test(v) ? "valid" : "invalid";
+});
+
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const login = document.getElementById("login").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const p1 = pass1.value;
+    const p2 = document.getElementById("pass2").value;
+
+    if (!supabaseClient) {
+        alert("Ошибка подключения к базе");
+        return;
+    }
+
+    if (p1 !== p2) {
+        alert("Пароли не совпадают");
+        return;
+    }
+
+    if (p1.length < 6) {
+        alert("Пароль слишком короткий");
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("registr")
+        .insert([
+            {
+  login,
+  email,
+  password: p1
+}
+        ]);
+
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
+
+    if (error) {
+        alert("Ошибка регистрации — смотри консоль");
+        return;
+    }
+
+    localStorage.setItem("auth", "true");
+    localStorage.setItem("user", login);
+
+    alert("Аккаунт создан!");
+    window.location.href = "index.html";
+});
+</script>
+
+</body>
+</html>

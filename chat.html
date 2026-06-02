@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Чат</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Inter;
+  background: radial-gradient(circle at top, #1e293b, #0f172a);
+  color:white;
+}
+
+/* CHAT WRAPPER */
+.chat{
+  max-width:900px;
+  height:90vh;
+  margin:30px auto;
+
+  display:flex;
+  flex-direction:column;
+
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(16px);
+
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* MESSAGES */
+.messages{
+  flex:1;
+  overflow-y:auto;
+  padding:20px;
+
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* MESSAGE BASE */
+.msg{
+  max-width:70%;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:14px;
+
+  display:flex;
+  flex-direction:column;
+
+  animation:fadeIn .2s ease;
+}
+
+/* OTHER USER */
+.msg.other{
+  background:rgba(255,255,255,0.06);
+  align-self:flex-start;
+  border-top-left-radius:4px;
+}
+
+/* YOU */
+.msg.me{
+  background:linear-gradient(135deg,#38bdf8,#6366f1);
+  align-self:flex-end;
+  border-top-right-radius:4px;
+}
+
+/* NAME */
+.msg b{
+  font-size:12px;
+  opacity:0.7;
+  margin-bottom:4px;
+}
+
+/* INPUT AREA */
+.send{
+  display:flex;
+  gap:10px;
+  padding:14px;
+  background:rgba(0,0,0,0.25);
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+
+input{
+  flex:1;
+  padding:12px 14px;
+  border:none;
+  border-radius:12px;
+
+  background:rgba(255,255,255,0.06);
+  color:white;
+  outline:none;
+}
+
+button{
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+
+  background:linear-gradient(135deg,#38bdf8,#6366f1);
+  color:white;
+  font-weight:600;
+
+  cursor:pointer;
+  transition:.2s;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+/* SCROLLBAR */
+.messages::-webkit-scrollbar{
+  width:6px;
+}
+
+.messages::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.1);
+  border-radius:10px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(6px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.chat-header{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  padding:18px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.03);
+  backdrop-filter:blur(10px);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: #0b1220;
+
+  font-size: 24px;
+  font-weight: 800;
+
+  box-shadow: 0 10px 30px rgba(56,189,248,0.35);
+}
+
+.logo-text h2 {
+  font-size: 20px;
+  color: #fff;
+  margin: 0;
+}
+
+.logo-text span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.chat-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:18px 20px;
+
+  border-bottom:1px solid rgba(255,255,255,0.06);
+
+  background:rgba(255,255,255,0.03);
+  backdrop-filter:blur(10px);
+}
+
+.chat-user{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.avatar{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:linear-gradient(135deg,#38bdf8,#6366f1);
+
+  font-weight:700;
+  font-size:20px;
+}
+
+.chat-user-info h3{
+  margin:0;
+  font-size:16px;
+}
+
+.chat-user-info span{
+  color:#94a3b8;
+  font-size:13px;
+}
+
+.finish-btn{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+.finish-btn:hover{
+  box-shadow:0 10px 30px rgba(34,197,94,0.35);
+}
+
+#sendBtn{
+  width:54px;
+  padding:0;
+  font-size:20px;
+}
+
+.send{
+  padding:16px;
+}
+
+#msgInput{
+  font-size:15px;
+}
+
+.msg{
+  line-height:1.5;
+}
+
+.msg div{
+  word-break:break-word;
+}
+</style>
+</head>
+
+<body>
+<div class="chat-header">
+
+  <div class="logo">
+
+    <div class="logo-icon">
+      W
+    </div>
+
+    <div class="logo-text">
+      <h2>WorkNet</h2>
+      <span>Freelance Platform</span>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="chat">
+
+  <div class="messages" id="messages"></div>
+
+<div class="chat-top">
+
+  <div class="chat-user">
+
+    <div class="avatar">
+      D
+    </div>
+
+    <div class="chat-user-info">
+
+  <h3 id="chatUserName">
+    Загрузка...
+  </h3>
+
+  <span id="chatStatus">
+    В сети
+  </span>
+
+</div>
+
+  </div>
+
+  <button class="finish-btn" onclick="finishOrder()">
+    Завершить заказ
+  </button>
+
+</div>
+
+  <div class="send">
+
+  <input
+    id="msgInput"
+    placeholder="Введите сообщение..."
+  >
+
+  <button onclick="sendMessage()" id="sendBtn">
+    ➜
+  </button>
+
+</div>
+
+</div>
+
+<script>
+
+const supabaseUrl = "https://nssrxeefdvxsoxdipkau.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zc3J4ZWVmZHZ4c294ZGlwa2F1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNjg4NjksImV4cCI6MjA5MzY0NDg2OX0.xYVpCFCa41AdsNyw7kX8N_0Gszkcc00dXUlyZ5nKhwY";
+
+const supabaseClient = window.supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+const params = new URLSearchParams(location.search);
+
+const taskId = params.get("task");
+let taskData = null;
+
+async function getChat(){
+
+  let { data: chat, error } = await supabaseClient
+    .from("chats")
+    .select("*")
+    .eq("task_id", taskId)
+    .maybeSingle();
+
+  if (error) {
+    console.log("chat error:", error);
+    return null;
+  }
+
+  if (!chat) {
+    const { data: newChat, error: createError } = await supabaseClient
+      .from("chats")
+      .insert({
+        task_id: taskId
+      })
+      .select()
+      .single();
+
+    if (createError) {
+      console.log("create chat error:", createError);
+      return null;
+    }
+
+    return newChat;
+  }
+
+  return chat;
+}
+
+async function loadTask(){
+
+  const { data } = await supabaseClient
+    .from("tasks")
+    .select("*")
+    .eq("id", taskId)
+    .single();
+
+  taskData = data;
+
+  let otherUser = data.customer_name;
+
+  if(data.customer_id === user.id){
+    otherUser = data.freelancer_name || "Исполнитель";
+  }
+
+  document.getElementById("chatUserName").innerText =
+    otherUser;
+
+  document.querySelector(".avatar").innerText =
+    otherUser.charAt(0).toUpperCase();
+
+  if(data.status === "completed"){
+
+  document.querySelector(".finish-btn").style.display = "none";
+
+  document.getElementById("msgInput").disabled = true;
+
+  document.getElementById("msgInput").placeholder =
+    "Заказ завершён";
+
+  document.getElementById("sendBtn").disabled = true;
+
+  document.getElementById("sendBtn").style.opacity = ".5";
+
+  document.getElementById("chatStatus")
+  .innerText = "Заказ завершён";
+
+}
+
+}
+
+async function loadMessages(){
+
+  const chat = await getChat();
+
+  const { data: messages } = await supabaseClient
+    .from("messages")
+    .select("*")
+    .eq("chat_id", chat.id)
+    .order("created_at");
+
+  const box = document.getElementById("messages");
+
+  box.innerHTML = "";
+
+  messages.forEach(m => {
+
+   const isMe = m.sender_id === user.id;
+
+box.innerHTML += `
+  <div class="msg ${isMe ? "me" : "other"}">
+    <b>${m.sender_name}</b>
+    <div>${m.text}</div>
+  </div>
+`;
+  });
+
+  box.scrollTop = box.scrollHeight;
+}
+
+async function finishOrder(){
+
+  const ok = confirm(
+    "Завершить заказ?"
+  );
+
+  if(!ok) return;
+
+  await supabaseClient
+    .from("tasks")
+    .update({
+      status:"completed"
+    })
+    .eq("id", taskId);
+
+  alert("Заказ завершен");
+
+  window.location.href = "create-task.html";
+
+}
+
+async function sendMessage(){
+
+  const input = document.getElementById("msgInput");
+
+  if(!input.value) return;
+
+  const chat = await getChat();
+
+  await supabaseClient
+    .from("messages")
+    .insert({
+      chat_id: chat.id,
+      sender_id: user.id,
+      sender_name: user.login,
+      text: input.value
+    });
+
+  input.value = "";
+
+  loadMessages();
+}
+
+supabaseClient
+  .channel("chat-room")
+  .on(
+    "postgres_changes",
+    {
+      event:"INSERT",
+      schema:"public",
+      table:"messages"
+    },
+    () => {
+      loadMessages();
+    }
+  )
+
+  .subscribe();
+
+loadTask();
+loadMessages();
+
+</script>
+
+</body>
+</html>

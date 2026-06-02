@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Биржа заказов | WorkNet</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+
+body {
+  color:#fff;
+  background-image:url("https://img.freepik.com/premium-photo/abstract-background-design-hd-sky-blue_851755-14400.jpg?semt=ais_hybrid&w=740&q=80");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+body::before {
+  content:"";
+  position:fixed;
+  inset:0;
+  background: radial-gradient(circle at top, rgba(56,189,248,0.15), transparent 40%), rgba(0,0,0,0.72);
+  backdrop-filter: blur(12px);
+  z-index:-1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 70px;
+
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  width: 54px;
+  height: 54px;
+
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+
+  color: #0b1220;
+
+  font-size: 24px;
+  font-weight: 800;
+
+  box-shadow: 0 10px 30px rgba(56,189,248,0.35);
+}
+
+.logo-text h2 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.logo-text span {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar a {
+  padding: 12px 16px;
+
+  border-radius: 14px;
+
+  color: #cbd5e1;
+  text-decoration: none;
+
+  font-size: 14px;
+
+  transition: 0.25s;
+}
+
+.navbar a:hover {
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.navbar a.active {
+  background: rgba(56,189,248,0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56,189,248,0.18);
+}
+
+#currencySelect {
+  margin-left: 8px;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+
+  color: #fff;
+
+  outline: none;
+  cursor: pointer;
+}
+
+#currencySelect option {
+  background: #0b1220;
+}
+
+nav a {
+  color:#cbd5e1;
+  padding:10px 14px;
+  border-radius:12px;
+  text-decoration:none;
+}
+
+nav a.active {
+  background:rgba(56,189,248,0.2);
+  color:#fff;
+}
+
+/* TITLE */
+.page-title {
+  text-align:center;
+  padding:70px 20px 30px;
+}
+
+.page-title h1 {font-size:48px;}
+
+/* FILTERS */
+.filters {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:40px;
+}
+
+.filter {
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.05);
+  cursor:pointer;
+}
+
+/* LAYOUT */
+.layout {
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:20px;
+  padding:0 70px;
+}
+
+/* SIDEBAR */
+.side-box {
+  background:rgba(255,255,255,0.04);
+  padding:15px;
+  border-radius:16px;
+  margin-bottom:20px;
+}
+
+.tags span {
+  display:inline-block;
+  margin:4px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.06);
+}
+
+/* JOB LIST */
+.job-list {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.job-card {
+  background:rgba(255,255,255,0.04);
+  padding:20px;
+  border-radius:16px;
+  transition:.2s;
+}
+
+.job-card:hover {
+  transform:translateY(-5px);
+  border:1px solid #38bdf8;
+}
+
+.job-header {
+  display:flex;
+  justify-content:space-between;
+}
+
+.job-title {color:#38bdf8;}
+
+.job-meta {
+  font-size:12px;
+  color:#94a3b8;
+  margin-top:10px;
+}
+
+button {
+  margin-top:10px;
+  padding:8px 12px;
+  border:none;
+  border-radius:10px;
+  background:#38bdf8;
+  cursor:pointer;
+}
+#currencySelect {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+#currencySelect option {
+  background: #111;
+  color: #fff;
+}
+/* кнопка */
+.order-btn {
+  position: fixed;
+  right: 20px;
+  top: 80px;
+  background: linear-gradient(135deg, #6c5ce7, #00cec9);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.order-btn:hover {
+  transform: scale(1.05);
+}
+
+/* фон модалки */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* окно */
+.modal {
+  width: 420px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  padding: 20px;
+  color: #fff;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-body input,
+.modal-body textarea,
+.modal-body select {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.modal-body textarea {
+  resize: none;
+  height: 80px;
+}
+
+.submit-btn {
+  margin-top: 10px;
+  background: linear-gradient(135deg, #00cec9, #6c5ce7);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  transform: scale(1.03);
+}
+.modal-body select {
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.modal-body select option {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.done-badge{
+  margin-top:12px;
+
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:10px 14px;
+
+  border-radius:12px;
+
+  background:rgba(34,197,94,0.12);
+
+  color:#22c55e;
+
+  font-size:14px;
+  font-weight:600;
+}
+.double-input{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:4px;
+}
+
+.double-input select{
+  width:100%;
+
+  padding:12px 14px;
+
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+
+  background:rgba(255,255,255,0.08);
+
+  color:#fff;
+
+  outline:none;
+
+  transition:.25s;
+  cursor:pointer;
+}
+
+.double-input select:hover{
+  border-color:rgba(56,189,248,0.35);
+}
+
+.double-input select:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 0 4px rgba(56,189,248,0.12);
+}
+
+.checkbox{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:6px;
+  padding:12px 14px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  cursor:pointer;
+  transition:.25s;
+}
+
+.checkbox:hover{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(56,189,248,0.2);
+}
+
+.checkbox input{
+  width:18px;
+  height:18px;
+
+  accent-color:#38bdf8;
+
+  cursor:pointer;
+}
+
+.checkbox span{
+  color:#fff;
+  font-size:14px;
+  font-weight:500;
+}
+.badge-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+}
+
+
+.urgent-badge,
+.level-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:7px 12px;
+  border-radius:999px;
+
+  font-size:12px;
+  font-weight:700;
+
+  width:max-content;
+  line-height:1;
+
+  border:1px solid transparent;
+}
+
+
+.urgent-badge{
+  background:rgba(239,68,68,0.12);
+  color:#ef4444;
+  border-color:rgba(239,68,68,0.25);
+}
+
+
+.level-badge{
+  backdrop-filter:blur(8px);
+}
+
+
+.level-Легкий{
+  background:rgba(34,197,94,0.12);
+  color:#22c55e;
+  border-color:rgba(34,197,94,0.25);
+}
+
+.level-Средний{
+  background:rgba(234,179,8,0.12);
+  color:#eab308;
+  border-color:rgba(234,179,8,0.25);
+}
+
+.level-Сложный{
+  background:rgba(239,68,68,0.12);
+  color:#ef4444;
+  border-color:rgba(239,68,68,0.25);
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="logo">
+
+    <div class="logo-icon">
+      W
+    </div>
+
+    <div class="logo-text">
+      <h2>WorkNet</h2>
+      <span>Freelance Platform</span>
+    </div>
+
+  </div>
+
+  <nav class="navbar">
+
+    <a href="index.html">Главная</a>
+    <a href="profile.html">Профиль</a>
+    <a href="orders.html" class="active">Биржа заказов</a>
+    <a href="support.html">Поддержка</a>
+
+   
+
+  </nav>
+
+</header>
+
+<div class="page-title">
+  <h1>Биржа заказов</h1>
+</div>
+
+<div class="filters">
+  <div class="filter" onclick="renderJobs()">Все</div>
+  <div class="filter" onclick="renderJobs('active')">Активные</div>
+  <div class="filter" onclick="renderJobs('done')">Выполненные</div>
+</div>
+
+<button class="order-btn" id="openOrder">Создание заказа</button>
+
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Создание заказа</h2>
+      <span class="close" id="closeOrder">&times;</span>
+    </div>
+
+    <div class="modal-body" id="orderForm">
+  <input type="text" placeholder="Название проекта" id="jobTitle">
+  <textarea placeholder="Опишите задачу" id="jobDesc"></textarea>
+
+  <select id="jobCategory">
+
+  <optgroup label="Дизайн">
+
+    <option>Веб-дизайн</option>
+    <option>UI/UX дизайн</option>
+    <option>Логотипы</option>
+    <option>Брендинг</option>
+    <option>Баннеры</option>
+    <option>Презентации</option>
+    <option>Дизайн карточек товара</option>
+    <option>Инфографика</option>
+    <option>Обложки</option>
+    <option>Оформление соцсетей</option>
+    <option>Анимация</option>
+    <option>Motion Design</option>
+
+  </optgroup>
+
+  <optgroup label="Разработка">
+
+    <option>HTML/CSS верстка</option>
+    <option>Frontend разработка</option>
+    <option>Backend разработка</option>
+    <option>Fullstack разработка</option>
+    <option>React разработка</option>
+    <option>Vue разработка</option>
+    <option>Node.js</option>
+    <option>Python разработка</option>
+    <option>Telegram боты</option>
+    <option>Парсеры</option>
+    <option>API интеграции</option>
+    <option>Создание сайтов</option>
+    <option>Интернет-магазины</option>
+    <option>Landing Page</option>
+    <option>WordPress</option>
+
+  </optgroup>
+
+  <optgroup label="Мобильные приложения">
+
+    <option>Android разработка</option>
+    <option>iOS разработка</option>
+    <option>Flutter</option>
+    <option>React Native</option>
+    <option>UI мобильных приложений</option>
+
+  </optgroup>
+
+  <optgroup label="Видео и медиа">
+
+    <option>Монтаж видео</option>
+    <option>TikTok/Reels монтаж</option>
+    <option>YouTube монтаж</option>
+    <option>Создание интро</option>
+    <option>3D анимация</option>
+    <option>3D моделирование</option>
+    <option>Озвучка</option>
+
+  </optgroup>
+
+  <optgroup label="Маркетинг">
+
+    <option>SMM продвижение</option>
+    <option>SEO оптимизация</option>
+    <option>Контекстная реклама</option>
+    <option>Таргетированная реклама</option>
+    <option>Email маркетинг</option>
+    <option>Продвижение Telegram</option>
+
+  </optgroup>
+
+  <optgroup label="Тексты">
+
+    <option>Копирайтинг</option>
+    <option>Рерайтинг</option>
+    <option>Написание статей</option>
+    <option>Описание товаров</option>
+    <option>Сценарии</option>
+    <option>Перевод текста</option>
+
+  </optgroup>
+
+  <optgroup label="GameDev">
+
+    <option>Unity разработка</option>
+    <option>Unreal Engine</option>
+    <option>Создание 2D игр</option>
+    <option>Создание 3D игр</option>
+    <option>Game Design</option>
+
+  </optgroup>
+
+  <optgroup label="ИИ и автоматизация">
+
+    <option>AI чат-боты</option>
+    <option>Генерация изображений</option>
+    <option>Автоматизация бизнеса</option>
+    <option>Нейросети</option>
+    <option>Prompt Engineering</option>
+
+  </optgroup>
+
+  <optgroup label="Другое">
+
+    <option>Консультация</option>
+    <option>Техническая поддержка</option>
+    <option>Настройка серверов</option>
+    <option>Обучение</option>
+    <option>Другое</option>
+
+  </optgroup>
+
+</select>
+
+<div class="double-input">
+
+  <select id="jobLevel">
+    <option>Легкий</option>
+    <option>Средний</option>
+    <option>Сложный</option>
+  </select>
+
+  <select id="jobDeadline">
+    <option>1 день</option>
+    <option>3 дня</option>
+    <option>7 дней</option>
+  </select>
+
+</div>
+
+<label class="checkbox">
+
+  <input type="checkbox" id="jobUrgent">
+
+  Срочный заказ
+
+</label>
+<input type="file" id="jobFiles">
+  <input type="number" placeholder="Бюджет" id="jobPrice">
+
+  <button class="submit-btn" id="submitOrder">Отправить заказ</button>
+</div>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div>
+  <div class="side-box">
+    <h3>Популярные услуги</h3>
+    <div class="tags">
+      <span>Дизайн сайтов</span>
+      <span>Логотипы</span>
+      <span>UI/UX</span>
+      <span>Landing page</span>
+      <span>Интернет-магазины</span>
+      <span>Telegram боты</span>
+      <span>Парсеры</span>
+      <span>Мобильные приложения</span>
+      <span>Редизайн сайтов</span>
+      <span>Баннеры</span>
+      <span>Презентации</span>
+      <span>Монтаж видео</span>
+      <span>Анимация</span>
+      <span>Маркетинг</span>
+    </div>
+  </div>
+
+  <div class="side-box">
+    <h3>Популярные теги</h3>
+    <div class="tags">
+      <span>HTML</span>
+      <span>CSS</span>
+      <span>JavaScript</span>
+      <span>React</span>
+      <span>Vue</span>
+      <span>Node.js</span>
+      <span>API</span>
+      <span>Python</span>
+      <span>Django</span>
+      <span>Telegram</span>
+      <span>Figma</span>
+      <span>Photoshop</span>
+      <span>SEO</span>
+      <span>SMM</span>
+      <span>WordPress</span>
+      <span>Shopify</span>
+    </div>
+  </div>
+</div>
+  <!-- JOB LIST -->
+  <div class="job-list" id="jobList"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+
+
+  const supabaseUrl = "https://nssrxeefdvxsoxdipkau.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zc3J4ZWVmZHZ4c294ZGlwa2F1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNjg4NjksImV4cCI6MjA5MzY0NDg2OX0.xYVpCFCa41AdsNyw7kX8N_0Gszkcc00dXUlyZ5nKhwY";
+
+
+const supabaseClient = window.supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+  window.location.href = "register.html";
+}
+
+let currency = "₸";
+
+/* ===== SAVE ===== */
+function save(){
+  localStorage.setItem("jobs", JSON.stringify(jobs));
+}
+
+/* ===== TIME FIX ===== */
+function timeAgo(ms){
+  let diff = Date.now() - ms;
+
+  let hours = Math.floor(diff / (1000 * 60 * 60));
+  let days = Math.floor(hours / 24);
+
+  if(hours < 1) return "только что";
+  if(hours < 24) return hours + "ч назад";
+  return days + "д назад";
+}
+
+/* ===== RENDER ===== */
+async function renderJobs(type = "all") {
+
+  const list = document.getElementById("jobList");
+
+  list.innerHTML = "Загрузка...";
+
+  let query = supabaseClient
+    .from("tasks")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (type !== "all") {
+    query = query.eq("status", type);
+  }
+
+  const { data: jobs, error } = await query;
+
+  if (error) {
+  alert(error.message);
+  console.log(error);
+  return;
+}
+
+  list.innerHTML = "";
+
+  if (!jobs.length) {
+    list.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:40px;
+        color:#94a3b8;
+      ">
+        Список заказов пуст
+      </div>
+    `;
+    return;
+  }
+
+  jobs.forEach((j) => {
+
+  list.innerHTML += `
+    <div class="job-card">
+
+<div class="badge-row">
+
+  ${j.urgent
+    ? `
+      <div class="urgent-badge">
+        ⚡ Срочный заказ
+      </div>
+    `
+    : ""
+  }
+
+  <div class="level-badge level-${j.level}">
+
+    ${
+      j.level === "Легкий"
+      ? "🟢 Легкий"
+
+      : j.level === "Средний"
+      ? "🟡 Средний"
+
+      : "🔴 Сложный"
+    }
+
+  </div>
+
+</div>
+
+  <div class="job-header">
+
+    <div class="job-title">
+      ${j.title || "Без названия"}
+    </div>
+
+    <div>
+      ${currency}${j.price || 0}
+    </div>
+
+  </div>
+
+  <p>
+    ${j.description || "Нет описания"}
+  </p>
+
+  <div class="job-meta">
+
+    ${(j.category || "Без категории")}
+
+    •
+
+    ${(j.customer_name || "Неизвестно")}
+
+    ${j.freelancer_name ? " → " + j.freelancer_name : ""}
+
+  </div>
+
+  ${
+    j.status === "active"
+    ? `
+      <button onclick="takeJob(${j.id})">
+        Взять заказ
+      </button>
+    `
+    : j.status === "in_work"
+    ? `
+      <button onclick="window.location.href='chat.html?task=${j.id}'">
+        Открыть чат
+      </button>
+    `
+    : `
+      <div class="done-badge">
+        Заказ завершён
+      </div>
+    `
+  }
+
+</div>
+  `;
+});
+}
+
+document.getElementById("submitOrder").onclick = async () => {
+
+  const title = document.getElementById("jobTitle").value;
+  const desc = document.getElementById("jobDesc").value;
+  const category = document.getElementById("jobCategory").value;
+  const price = document.getElementById("jobPrice").value;
+
+  const urgent =
+document.getElementById("jobUrgent").checked;
+
+const level =
+document.getElementById("jobLevel").value;
+
+  if (!title || !desc || !price) {
+    alert("Заполни все поля");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("tasks")
+    .insert({
+      title,
+      description: desc,
+      category,
+      price,
+
+      urgent: urgent,
+level: level,
+      customer_id: user.id,
+      customer_name: user.login,
+
+      status: "active"
+    });
+
+  if (error) {
+  alert(error.message);
+  console.log(error);
+  return;
+}
+
+  renderJobs();
+
+  document.getElementById("orderModal").style.display = "none";
+};
+
+function formatTenge(amount) {
+  return new Intl.NumberFormat('ru-RU').format(amount) + " ₸";
+}
+
+/* ===== TAKE JOB ===== */
+async function takeJob(taskId){
+
+  const { error } = await supabaseClient
+    .from("tasks")
+    .update({
+      status: "in_work",
+      freelancer_id: user.id,
+      freelancer_name: user.login
+    })
+    .eq("id", taskId);
+
+  if(error){
+    console.log(error);
+    return;
+  }
+
+  const { data: task } = await supabaseClient
+    .from("tasks")
+    .select("*")
+    .eq("id", taskId)
+    .single();
+
+  await supabaseClient
+    .from("chats")
+    .insert({
+      task_id: taskId,
+
+      customer_id: task.customer_id,
+      freelancer_id: user.id
+    });
+
+  renderJobs();
+
+  window.location.href = `chat.html?task=${taskId}`;
+}
+
+/* ===== FINISH JOB ===== */
+async function finishJob(taskId){
+
+  const stars = prompt("Поставьте оценку от 1 до 5");
+
+  if(!stars) return;
+
+  const { data: task } = await supabaseClient
+    .from("tasks")
+    .select("*")
+    .eq("id", taskId)
+    .single();
+
+  await supabaseClient
+    .from("reviews")
+    .insert({
+      from_user: task.customer_id,
+      to_user: task.freelancer_id,
+      stars: Number(stars),
+      text: "Заказ выполнен"
+    });
+
+  await supabaseClient
+    .from("tasks")
+    .update({
+      status: "done"
+    })
+    .eq("id", taskId);
+
+  renderJobs();
+}
+
+/* ===== CURRENCY ===== */
+function changeCurrency(cur){
+  currency = cur;
+  renderJobs();
+}
+
+/* ===== MODAL FIX (ВАЖНО) ===== */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const openBtn = document.getElementById("openOrder");
+  const modal = document.getElementById("orderModal");
+  const closeBtn = document.getElementById("closeOrder");
+  
+
+  if (!openBtn || !modal || !closeBtn) {
+    console.log("MODAL ELEMENTS NOT FOUND");
+    return;
+  }
+
+  openBtn.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+});
+
+/* ===== INIT ===== */
+renderJobs();
+</script>
+
+</body>
+</html>

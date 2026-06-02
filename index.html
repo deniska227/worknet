@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkNet</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  color: #fff;
+  background-image: url("https://img.freepik.com/free-vector/realistic-polygonal-background_23-2148921799.jpg?semt=ais_hybrid&w=740");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(56,189,248,0.15), transparent 40%),
+  rgba(0,0,0,0.72);
+  backdrop-filter: blur(12px);
+  z-index: -1;
+}
+
+.header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+transform: translateX(-50%);
+  width: calc(100% - 80px);
+  margin: 20px auto 0;
+  padding: 16px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    #38bdf8,
+    #0ea5e9
+  );
+  color: #0b1220;
+  font-size: 24px;
+  font-weight: 800;
+  box-shadow: 0 10px 30px rgba(56,189,248,0.35);
+}
+
+.logo-text h2 {
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.logo-text span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.navbar {
+  display: flex;
+  gap: 12px;
+}
+
+.navbar a {
+  position: relative;
+  padding: 12px 16px;
+  border-radius: 14px;
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: 0.25s;
+  font-size: 14px;
+}
+
+.navbar a:hover {
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.navbar a.active {
+  background: rgba(56,189,248,0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56,189,248,0.18);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.online-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.online-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 12px #22c55e;
+}
+
+.start-btn {
+  padding: 13px 18px;
+  border-radius: 14px;
+  background: #38bdf8;
+  color: #0b1220;
+  text-decoration: none;
+  font-weight: 700;
+  transition: 0.25s;
+}
+
+.start-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: #0ea5e9;
+  box-shadow: 0 10px 30px rgba(56,189,248,0.35);
+}
+
+@media (max-width: 1100px) {
+
+  .header {
+    flex-direction: column;
+    gap: 20px;
+    width: calc(100% - 30px);
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+}
+
+@media (max-width: 700px) {
+  .header-right {
+    flex-direction: column;
+  }
+
+}
+
+.hero {
+  min-height: 92vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 80px 70px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+
+  width: 700px;
+  height: 700px;
+
+  background: #38bdf8;
+
+  filter: blur(180px);
+
+  opacity: 0.12;
+
+  top: -250px;
+  left: -250px;
+}
+
+.hero-content {
+  max-width: 620px;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-block;
+
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  background: rgba(56,189,248,0.12);
+
+  border: 1px solid rgba(56,189,248,0.25);
+
+  color: #38bdf8;
+
+  margin-bottom: 25px;
+
+  font-size: 14px;
+}
+
+.hero-content h1 {
+  font-size: 68px;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 25px;
+}
+
+.hero-content h1 span {
+  color: #38bdf8;
+}
+
+.hero-content p {
+  color: #cbd5e1;
+
+  font-size: 18px;
+
+  line-height: 1.7;
+
+  max-width: 560px;
+
+  margin-bottom: 35px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 50px;
+}
+
+.hero-btn {
+  padding: 14px 22px;
+
+  border-radius: 14px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.hero-btn.primary {
+  background: #38bdf8;
+  color: #0b1220;
+}
+
+.hero-btn.primary:hover {
+  transform: translateY(-4px);
+  background: #0ea5e9;
+}
+
+.hero-btn.secondary {
+  border: 1px solid rgba(255,255,255,0.1);
+
+  background: rgba(255,255,255,0.04);
+
+  color: #fff;
+}
+
+.hero-btn.secondary:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.hero-stats {
+  display: flex;
+  gap: 45px;
+}
+
+.hero-stat h3 {
+  font-size: 34px;
+  color: #fff;
+}
+
+.hero-stat span {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.hero-preview {
+  position: relative;
+
+  width: 500px;
+  height: 500px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard {
+  width: 100%;
+  padding: 25px;
+
+  border-radius: 26px;
+
+  background: rgba(255,255,255,0.05);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(16px);
+
+  z-index: 2;
+}
+
+.dash-top {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.dash-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+}
+
+.dash-job {
+  padding: 18px;
+
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.04);
+
+  margin-bottom: 15px;
+
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.dash-job h4 {
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.dash-job span {
+  color: #38bdf8;
+}
+
+.floating-card {
+  position: absolute;
+
+  padding: 14px 18px;
+
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.06);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(14px);
+
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  animation: floatCard 4s ease-in-out infinite;
+}
+
+.card1 {
+  top: -20px;
+  left: -30px;
+}
+
+.card2 {
+  top: 80px;
+  right: -50px;
+
+  animation-delay: 1s;
+}
+
+.card3 {
+  bottom: 20px;
+  left: -50px;
+
+  animation-delay: 2s;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #38bdf8;
+}
+
+@keyframes floatCard {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+
+}
+
+@media (max-width: 1100px) {
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 60px;
+  }
+
+  .hero-content h1 {
+    font-size: 48px;
+  }
+
+  .hero-buttons,
+  .hero-stats {
+    justify-content: center;
+  }
+
+  .hero-preview {
+    width: 100%;
+    max-width: 500px;
+  }
+
+}
+
+.jobs {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+
+  gap: 24px;
+
+  padding: 20px 70px;
+}
+
+.job {
+  position: relative;
+
+  background: rgba(255,255,255,0.04);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  border-radius: 28px;
+
+  padding: 24px;
+
+  backdrop-filter: blur(18px);
+
+  overflow: hidden;
+
+  transition: 0.35s;
+}
+
+.job::before {
+  content: "";
+
+  position: absolute;
+
+  width: 250px;
+  height: 250px;
+
+  background: #38bdf8;
+
+  filter: blur(120px);
+
+  opacity: 0;
+
+  top: -120px;
+  right: -120px;
+
+  transition: 0.4s;
+}
+
+.job:hover {
+  transform: translateY(-10px);
+
+  border-color: rgba(56,189,248,0.45);
+}
+
+.job:hover::before {
+  opacity: 0.12;
+}
+
+.job-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 22px;
+}
+
+.job-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.job-user img {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  border: 2px solid rgba(56,189,248,0.4);
+}
+
+.job-user h4 {
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.job-user span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.job-status {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.25);
+  color: #f87171;
+  font-size: 13px;
+}
+
+.job-status.blue {
+  background: rgba(56,189,248,0.12);
+  border: 1px solid rgba(56,189,248,0.2);
+  color: #38bdf8;
+}
+
+.job-status.green {
+  background: rgba(34,197,94,0.12);
+  border: 1px solid rgba(34,197,94,0.2);
+  color: #4ade80;
+}
+
+.job h3 {
+  font-size: 26px;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.job p {
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+.job-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.job-tags span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #cbd5e1;
+  font-size: 13px;
+}
+
+.job-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.job-bottom small {
+  color: #94a3b8;
+}
+
+.apply {
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: #38bdf8;
+  color: #0b1220;
+  text-decoration: none;
+  font-weight: 700;
+  transition: 0.25s;
+}
+
+.apply:hover {
+  transform: scale(1.05);
+  background: #0ea5e9;
+}
+
+footer {
+  margin-top: 60px;
+  padding: 50px 70px;
+  background: rgba(0,0,0,0.3);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.footer-box h4 {
+  color: #38bdf8;
+  margin-bottom: 10px;
+}
+
+.footer-box a, .footer-box p {
+  color: #94a3b8;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 6px;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.how-section {
+  padding: 120px 70px;
+
+  position: relative;
+}
+
+.section-heading {
+  text-align: center;
+
+  max-width: 700px;
+
+  margin: 0 auto 80px;
+}
+
+.mini-badge {
+  display: inline-block;
+
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  background: rgba(56,189,248,0.12);
+
+  border: 1px solid rgba(56,189,248,0.2);
+
+  color: #38bdf8;
+
+  font-size: 14px;
+
+  margin-bottom: 22px;
+}
+
+.section-heading h2 {
+  font-size: 58px;
+
+  letter-spacing: -2px;
+
+  margin-bottom: 20px;
+}
+
+.section-heading p {
+  color: #94a3b8;
+
+  font-size: 18px;
+
+  line-height: 1.7;
+}
+
+.steps {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 30px;
+
+  flex-wrap: wrap;
+}
+
+.step-card {
+  position: relative;
+
+  width: 340px;
+
+  padding: 35px 28px;
+
+  border-radius: 30px;
+
+  background: rgba(255,255,255,0.04);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(18px);
+
+  overflow: hidden;
+
+  transition: 0.35s;
+}
+
+.step-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  background: #38bdf8;
+
+  filter: blur(120px);
+
+  opacity: 0;
+
+  top: -100px;
+  right: -100px;
+
+  transition: 0.35s;
+}
+
+.step-card:hover {
+  transform: translateY(-12px);
+
+  border-color: rgba(56,189,248,0.4);
+}
+
+.step-card:hover::before {
+  opacity: 0.12;
+}
+
+.step-number {
+  position: absolute;
+
+  top: 22px;
+  right: 24px;
+
+  font-size: 60px;
+
+  font-weight: 800;
+
+  color: rgba(255,255,255,0.05);
+}
+
+.step-icon {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(56,189,248,0.12);
+
+  font-size: 34px;
+
+  margin-bottom: 28px;
+}
+
+.step-card h3 {
+  font-size: 28px;
+
+  margin-bottom: 18px;
+}
+
+.step-card p {
+  color: #cbd5e1;
+
+  line-height: 1.8;
+}
+
+.step-line {
+  width: 80px;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(56,189,248,0.6),
+    transparent
+  );
+}
+
+@media (max-width: 1200px) {
+
+  .step-line {
+    display: none;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .section-heading h2 {
+    font-size: 42px;
+  }
+
+  .step-card {
+    width: 100%;
+  }
+
+}
+
+@media (max-width: 900px) {
+  .info-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info-left p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .info-right img {
+    transform: none;
+  }
+}
+
+.compare-section{
+padding:120px 70px;
+position:relative;
+}
+
+.compare-top{
+text-align:center;
+margin-bottom:70px;
+}
+
+.compare-badge{
+display:inline-block;
+padding:10px 16px;
+border-radius:999px;
+background:rgba(56,189,248,.12);
+border:1px solid rgba(56,189,248,.2);
+color:#38bdf8;
+font-size:14px;
+margin-bottom:22px;
+}
+
+.compare-top h2{
+font-size:56px;
+letter-spacing:-2px;
+max-width:850px;
+margin:auto;
+}
+
+.compare-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+gap:28px;
+}
+
+.compare-card{
+position:relative;
+padding:38px 32px;
+border-radius:30px;
+overflow:hidden;
+backdrop-filter:blur(18px);
+transition:.35s;
+}
+
+.compare-card::before{
+content:"";
+position:absolute;
+width:250px;
+height:250px;
+filter:blur(120px);
+opacity:.08;
+top:-100px;
+right:-100px;
+}
+
+.compare-card.bad{
+background:rgba(239,68,68,.06);
+border:1px solid rgba(239,68,68,.15);
+}
+
+.compare-card.bad::before{
+background:#ef4444;
+}
+
+.compare-card.good{
+background:rgba(56,189,248,.08);
+border:1px solid rgba(56,189,248,.18);
+}
+
+.compare-card.good::before{
+background:#38bdf8;
+}
+
+.compare-card:hover{
+transform:translateY(-10px);
+}
+
+.compare-icon{
+width:74px;
+height:74px;
+border-radius:22px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+margin-bottom:28px;
+background:rgba(255,255,255,.06);
+}
+
+.compare-card h3{
+font-size:32px;
+margin-bottom:28px;
+}
+
+.compare-card ul{
+display:flex;
+flex-direction:column;
+gap:18px;
+padding:0;
+list-style:none;
+}
+
+.compare-card li{
+position:relative;
+padding-left:28px;
+color:#dbe4ee;
+line-height:1.7;
+}
+
+.compare-card li::before{
+content:"•";
+position:absolute;
+left:0;
+color:#38bdf8;
+font-size:22px;
+}
+
+.compare-card.bad li::before{
+color:#f87171;
+}
+
+@media(max-width:768px){
+.compare-top h2{
+font-size:40px;
+}
+}
+
+.glass-stack {
+  position: relative;
+  width: 260px;
+  height: 260px;
+}
+
+.glass {
+  position: absolute;
+  width: 100%;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  transition: 0.3s;
+}
+
+.g1 { top: 0; left: 0; }
+.g2 { top: 60px; left: 20px; }
+.g3 { top: 120px; left: 40px; }
+
+.glass:hover {
+  transform: scale(1.05) rotate(1deg);
+}
+
+
+@media (max-width: 900px) {
+  .idea-block {
+    flex-direction: column;
+    margin: 40px 20px;
+  }
+
+  .glass-stack {
+    margin-top: 30px;
+  }
+}
+
+.reviews-section {
+  margin-top: 100px;
+  overflow: hidden;
+  position: relative;
+}
+
+.reviews-title {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 40px;
+  color: #fff;
+  letter-spacing: -1px;
+}
+
+.reviews-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.reviews-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+
+  animation: scrollReviews 35s linear infinite;
+}
+
+.review-card {
+  width: 320px;
+  min-height: 180px;
+  padding: 24px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(14px);
+  transition: 0.3s;
+}
+
+.review-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(56,189,248,0.5);
+  background: rgba(255,255,255,0.06);
+}
+
+.stars {
+  color: #38bdf8;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.review-card p {
+  color: #e2e8f0;
+  line-height: 1.7;
+  margin-bottom: 18px;
+  font-size: 15px;
+}
+
+.review-card span {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+@keyframes scrollReviews {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .reviews-title {
+    font-size: 30px;
+  }
+  .review-card {
+    width: 260px;
+    min-height: 170px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+<script>
+  function isLogged() {
+    return localStorage.getItem("auth") === "true";
+  }
+
+  function goSmart() {
+    if (isLogged()) {
+      window.location.href = "profile.html";
+    } else {
+      window.location.href = "login.html";
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem("auth");
+    window.location.href = "index.html";
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<header class="header">
+
+  <div class="logo">
+
+    <div class="logo-icon">
+      W
+    </div>
+
+    <div class="logo-text">
+      <h2>WorkNet</h2>
+      <span>Freelance Platform</span>
+    </div>
+
+  </div>
+
+  <nav class="navbar">
+
+    <a href="#" class="active">
+      Главная
+    </a>
+
+    <a href="profile.html">
+      Профиль
+    </a>
+
+    <a href="create-task.html">
+      Заказы
+    </a>
+
+    <a href="support.html">
+      Поддержка
+    </a>
+
+  </nav>
+
+  <div class="header-right">
+
+    <a href="register.html" onclick="goSmart()" class="start-btn">
+      Начать
+    </a>
+
+  </div>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+
+    <h1>
+      Найди работу <span>или исполнителя</span><br>
+      за несколько минут
+    </h1>
+
+    <p>
+      WorkNet объединяет заказчиков и фрилансеров
+      в одном современном пространстве для удалённой работы.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="create-task.html" class="hero-btn primary">
+        Найти заказ
+      </a>
+
+      <a href="#" onclick="goSmart()" class="hero-btn secondary">
+        Разместить проект
+      </a>
+    </div>
+
+    <div class="hero-stats">
+
+      <div class="hero-stat">
+        <h3>12K+</h3>
+        <span>Заказов</span>
+      </div>
+
+      <div class="hero-stat">
+        <h3>3.5K+</h3>
+        <span>Исполнителей</span>
+      </div>
+
+      <div class="hero-stat">
+        <h3>24/7</h3>
+        <span>Поддержка</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="hero-preview">
+
+    <div class="floating-card card1">
+      <div class="dot"></div>
+      Telegram Bot — 180.000₸
+    </div>
+
+
+    <div class="floating-card card3">
+      <div class="dot"></div>
+      Landing Page — 120.000₸
+    </div>
+
+    <div class="dashboard">
+
+      <div class="dash-top">
+        <div class="dash-circle"></div>
+        <div class="dash-circle"></div>
+        <div class="dash-circle"></div>
+      </div>
+
+      <div class="dash-job">
+        <h4>Разработка Telegram бота</h4>
+        <span>₸220.000</span>
+      </div>
+
+      <div class="dash-job">
+        <h4>Дизайн мобильного приложения</h4>
+        <span>₸140.000</span>
+      </div>
+
+      <div class="dash-job">
+        <h4>Frontend React разработчик</h4>
+        <span>₸310.000</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="jobs">
+
+  <div class="job">
+
+    <div class="job-top">
+
+      <div class="job-user">
+
+        <img src="https://i.pravatar.cc/100?img=12">
+
+        <div>
+          <h4>Alex Studio</h4>
+          <span>2 минуты назад</span>
+        </div>
+
+      </div>
+
+      <div class="job-status">
+        Срочно
+      </div>
+
+    </div>
+
+    <h3>Разработка Telegram бота</h3>
+
+    <p>
+      Требуется Telegram бот с системой пользователей,
+      оплатой и админ панелью.
+    </p>
+
+    <div class="job-tags">
+      <span>Telegram</span>
+      <span>Bot</span>
+      <span>JavaScript</span>
+    </div>
+
+    <div class="job-bottom">
+
+      <div>
+        <div class="price">₸220.000</div>
+        <small>12 откликов</small>
+      </div>
+
+      <a class="apply" href="create-task.html" onclick="goSmart()">
+        Откликнуться
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="job">
+
+    <div class="job-top">
+
+      <div class="job-user">
+
+        <img src="https://i.pravatar.cc/100?img=22">
+
+        <div>
+          <h4>UIFlow</h4>
+          <span>15 минут назад</span>
+        </div>
+
+      </div>
+
+      <div class="job-status blue">
+        Новый
+      </div>
+
+    </div>
+
+    <h3>UI/UX дизайн приложения</h3>
+
+    <p>
+      Нужен современный интерфейс мобильного приложения
+      в минималистичном стиле.
+    </p>
+
+    <div class="job-tags">
+      <span>Figma</span>
+      <span>UI/UX</span>
+      <span>Mobile</span>
+    </div>
+
+    <div class="job-bottom">
+
+      <div>
+        <div class="price">₸140.000</div>
+        <small>5 откликов</small>
+      </div>
+
+      <a class="apply" href="create-task.html" onclick="goSmart()">
+        Откликнуться
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="job">
+
+    <div class="job-top">
+
+      <div class="job-user">
+
+        <img src="https://i.pravatar.cc/100?img=33">
+
+        <div>
+          <h4>NextVision</h4>
+          <span>1 час назад</span>
+        </div>
+
+      </div>
+
+      <div class="job-status green">
+        🟢 Активно
+      </div>
+
+    </div>
+
+    <h3>Landing Page для бизнеса</h3>
+
+    <p>
+      Требуется адаптивный landing page
+      с современным premium дизайном.
+    </p>
+
+    <div class="job-tags">
+      <span>HTML</span>
+      <span>CSS</span>
+      <span>Frontend</span>
+    </div>
+
+    <div class="job-bottom">
+
+      <div>
+        <div class="price">₸120.000</div>
+        <small>18 откликов</small>
+      </div>
+
+      <a class="apply" href="create-task.html" onclick="goSmart()">
+        Откликнуться
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="how-section">
+
+  <div class="section-heading">
+
+    <span class="mini-badge">
+      Как это работает?
+    </span>
+    <h2>
+      Как работает WorkNet
+    </h2>
+    <p>
+      Всего несколько шагов отделяют вас
+      от успешного сотрудничества.
+    </p>
+  </div>
+
+
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-number">
+        01
+      </div>
+      <div class="step-icon">
+        1
+      </div>
+      <h3>Создайте заказ</h3>
+      <p>
+        Опишите задачу, укажите бюджет
+        и опубликуйте проект за пару минут.
+      </p>
+
+    </div>
+
+    <div class="step-line"></div>
+
+    <div class="step-card">
+      <div class="step-number">
+        02
+      </div>
+      <div class="step-icon">
+        2
+      </div>
+      <h3>Найдите исполнителя</h3>
+      <p>
+        Получайте отклики от фрилансеров
+        и выбирайте лучшего специалиста.
+      </p>
+    </div>
+
+    <div class="step-line"></div>
+
+    <div class="step-card">
+      <div class="step-number">
+        03
+      </div>
+      <div class="step-icon">
+        3
+      </div>
+      <h3>Получите результат</h3>
+      <p>
+        Общайтесь, контролируйте выполнение
+        и успешно завершайте проект.
+      </p>
+    </div>
+  </div>
+
+</section>
+
+<section class="compare-section">
+
+<div class="compare-top">
+<h2>Почему пользователи выбирают WorkNet</h2>
+</div>
+
+<div class="compare-grid">
+
+<div class="compare-card bad">
+<div class="compare-icon">❌</div>
+<h3>Обычные фриланс платформы</h3>
+
+<ul>
+<li>Сложный интерфейс</li>
+<li>Долгий поиск исполнителей</li>
+<li>Высокие комиссии</li>
+<li>Медленная поддержка</li>
+<li>Неудобное взаимодействие</li>
+</ul>
+</div>
+
+<div class="compare-card good">
+<div class="compare-icon">🚀</div>
+<h3>Платформа WorkNet</h3>
+
+<ul>
+<li>Современный минималистичный дизайн</li>
+<li>Быстрое создание заказов</li>
+<li>Удобное взаимодействие</li>
+<li>Безопасные сделки</li>
+<li>Активное сообщество исполнителей</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<section class="reviews-section">
+
+  <h2 class="reviews-title">Отзывы пользователей</h2>
+
+  <div class="reviews-wrapper">
+
+    <div class="reviews-track">
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Очень удобный интерфейс и быстро нашёл дизайнера</p>
+        <span>— Артём</span>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Заказ выполнили за 1 день, рекомендую платформу</p>
+        <span>— Данияр</span>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Нормальные цены и приятный современный дизайн</p>
+        <span>— Алина</span>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Удобно искать Telegram разработчиков</p>
+        <span>— Максим</span>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Нашёл первого клиента уже в первый день</p>
+        <span>— Влад</span>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Платформа выглядит очень современно</p>
+        <span>— Анастасия</span>
+      </div>
+
+      
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Очень удобный интерфейс и быстро нашёл дизайнера</p>
+        <span>— Артём</span>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Заказ выполнили за 1 день, рекомендую платформу</p>
+        <span>— Данияр</span>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Нормальные цены и приятный современный дизайн</p>
+        <span>— Алина</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+
+  <div class="footer-grid">
+
+    <div class="footer-box">
+      <h4>WorkNet</h4>
+      <p>Топ фриланс платформа для заказов и исполнителей</p>
+    </div>
+
+    <div class="footer-box">
+      <h4>Контакты</h4>
+      <a href="#">Telegram: @WorkNet</a>
+      <a href="#">Email: support@fcer.com</a>
+    </div>
+
+    <div class="footer-box">
+      <h4>Разделы</h4>
+      <a href="#">Проекты</a>
+      <a href="#">Исполнители</a>
+      <a href="#">Как это работает</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 WorkNet. All rights reserved.
+  </div>
+
+</footer>
+</body>
+</html>

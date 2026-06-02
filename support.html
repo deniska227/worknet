@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Поддержка | WorkNet</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  background-image: url("https://png.pngtree.com/thumb_back/fw800/background/20240616/pngtree-blue-business-background-image_15893112.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(12px);
+  z-index: -1;
+}
+
+header {
+  padding: 18px 70px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: #0b1220;
+
+  font-size: 24px;
+  font-weight: 800;
+
+  box-shadow: 0 10px 30px rgba(56,189,248,0.35);
+}
+
+.logo-text h2 {
+  font-size: 20px;
+  color: #fff;
+  margin: 0;
+}
+
+.logo-text span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.chat-box {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 20px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 20px;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.messages {
+  height: 420px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.msg {
+  margin: 10px 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  max-width: 70%;
+}
+
+.user {
+  background: #38bdf8;
+  color: #000;
+  margin-left: auto;
+}
+
+.ai {
+  background: rgba(255,255,255,0.06);
+}
+
+.input-box {
+  display: flex;
+  margin-top: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px 0 0 12px;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+button {
+  padding: 12px 16px;
+  border: none;
+  background: #38bdf8;
+  cursor: pointer;
+  border-radius: 0 12px 12px 0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+
+    <div class="logo-icon">
+      W
+    </div>
+
+    <div class="logo-text">
+      <h2>WorkNet</h2>
+      <span>Служба поддержки</span>
+    </div>
+
+  </div>
+</header>
+
+<div class="chat-box">
+
+  <div class="messages" id="chat"></div>
+
+  <div class="input-box">
+    <input id="input" placeholder="Напиши вопрос...">
+    <button onclick="send()">➤</button>
+  </div>
+
+</div>
+
+<script>
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+
+function addMsg(text, type){
+  chat.innerHTML += `<div class="msg ${type}">${text}</div>`;
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function ai(text){
+  return "🤖 WorkNet AI: Я получил твой вопрос — \"" + text + "\". Скоро отвечу точнее.";
+}
+
+async function send(){
+  const text = input.value;
+  if(!text) return;
+
+  addMsg(text, "user");
+  input.value = "";
+
+  const res = await ai(text);
+  addMsg(res, "ai");
+}
+</script>
+
+</body>
+</html>
