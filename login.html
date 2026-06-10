@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta charset="UTF-8">
     <title>Вход</title>
 
@@ -37,8 +38,8 @@ body::before {
 
 
 .form-container {
-  width: 360px;
-  padding: 30px;
+  width: min(92vw, 420px);
+  padding: 28px;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 20px;
@@ -46,7 +47,6 @@ body::before {
   text-align: center;
   box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
-
 
 .logo {
   width: 70px;
@@ -147,6 +147,37 @@ a:hover {
 .invalid {
   color: #ef4444;
   font-size: 12px;
+}
+
+@media (max-width: 768px) {
+
+  body {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  .input-group input {
+    font-size: 16px;
+    padding: 16px 14px;
+    border-radius: 14px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .logo {
+    width: 90px;
+  }
 }
 </style>
 
